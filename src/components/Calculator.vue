@@ -5,14 +5,13 @@
       <input type="number" v-model.number="operand2">
       = {{result}}
     </div>
-    <div class="keyboard">
-      <button @click="add">+</button>
-      <button @click="sub">-</button>
-      <button @click="mul">*</button>
-      <button @click="div">/</button>
-      <button @click="pow">^</button>
-      <button @click="intDiv">int /</button>
+    <div class="buttons">
+      <button v-for="btn in buttons" :key="btn" @click="calculate(btn)">{{ btn }}</button>
     </div>
+    <div class="error" v-show="error">
+      Ошибка: {{ error }}
+    </div>
+
   </div>
 </template>
 
@@ -23,10 +22,35 @@ export default {
     return {
       operand1: 0,
       operand2: 0,
-      result: 0
+      result: 0,
+      error: '',
+      buttons: ['+', '-', '*', '/', '^', 'int /']
     }
   },
   methods: {
+    calculate(op = '+') {
+      this.error = '';
+      switch (op) {
+        case '+':
+          this.add();
+          break;
+        case '-':
+          this.sub();
+          break;
+        case '/':
+          this.div();
+          break;
+        case '*':
+          this.mul();
+          break;
+        case 'int /':
+          this.intDiv();
+          break;
+        case '^':
+          this.pow();
+          break;
+      }
+    },
     add() {
       this.result =  this.operand1 + this.operand2;
     },
@@ -37,6 +61,10 @@ export default {
       this.result = this.operand1 * this.operand2;
     },
     div() {
+      if (this.operand2 === 0) {
+        this.error = 'На 0 делить нельзя!'
+        return;
+      }
       this.result = this.operand1 / this.operand2;
     },
     pow() {
@@ -48,3 +76,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.error {
+  color: red;
+}
+</style>
