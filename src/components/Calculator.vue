@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="display">
-      <input type="number" v-model.number="operand1" @focus="operandNum = 'operand1'">
-      <input type="number" v-model.number="operand2" @focus="operandNum = 'operand2'">
+      <input type="number" name="operand1" v-model.number="operand1" @focus="operandNum = 'operand1'">
+      <input type="number" name="operand2" v-model.number="operand2" @focus="operandNum = 'operand2'">
       = {{result}}
     </div>
     <div class="buttons">
-      <button v-for="btn in buttons" :key="btn" @click="calculate(btn)">{{ btn }}</button>
+      <button :name="btn" v-for="btn in buttons" :key="btn" @click="calculate(btn)">{{ btn }}</button>
     </div>
     <div class="error" v-show="error">
       Ошибка: {{ error }}
@@ -15,7 +15,7 @@
       <input type="checkbox" id="keyboard" v-model="keyboardShow">
       <label for="keyboard">Отобразить экранную клавиатуру</label>
       <div class="keys" v-show="keyboardShow">
-        <button v-for="key in keys" :key="key" @click="activeKey(key)">{{ key }}</button>
+        <button :name="key" v-for="key in keys" :key="key" @click="activeKey(key)">{{ key }}</button>
         <br>
         <input type="radio" id="op1" name="operands" value="operand1" v-model="operandNum"
                :checked="operandNum === 'operand1'">
